@@ -38,18 +38,27 @@ const Option = ({ optionsToSelect, placeholder }) => {
   return (
     <>
       <div className="option_container">
-        <div>
+        <div className="option__selected">
           <input
+            className="option__selected-input"
             value={selectedOptionDraft.name}
             placeholder={placeholder}
             onChange={onOptionDraftEdit}
             onKeyUp={onOptionSubmit}
           />
-          {selectedOptionDraft.name && <span onClick={onOptionDelete}>x</span>}
+          {selectedOptionDraft.name && (
+            <span className="option__delete" onClick={onOptionDelete}>
+              &#10005;
+            </span>
+          )}
         </div>
-        <ul>
+        <ul className="option__list">
           {optionsToSelect.map((option) => (
-            <li key={option.id} onClick={() => onOptionSelect(option)}>
+            <li
+              className="option__list-element"
+              key={option.id}
+              onClick={() => onOptionSelect(option)}
+            >
               {option.name}
             </li>
           ))}

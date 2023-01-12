@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Option = ({ optionsToSelect, placeholder }) => {
   const [selectedOption, setSelectedOption] = useState({});
   const [selectedOptionDraft, setSelectedOptionDraft] = useState({});
   const [selectedOptionSubbmited, setSelectedOptionSubbmited] = useState({});
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("click", () => setIsOptionsOpen(false));
+  }, []);
 
   const onOptionSelect = (option) => {
     setSelectedOption(option);
@@ -33,6 +38,7 @@ const Option = ({ optionsToSelect, placeholder }) => {
         setSelectedOptionSubbmited(selectedOption);
       }
     }
+    setIsOptionsOpen(false);
   };
 
   return (
@@ -45,6 +51,10 @@ const Option = ({ optionsToSelect, placeholder }) => {
             placeholder={placeholder}
             onChange={onOptionDraftEdit}
             onKeyUp={onOptionSubmit}
+            onClick={(event) => {
+              setIsOptionsOpen(true);
+              event.stopPropagation();
+            }}
           />
           {selectedOptionDraft.name && (
             <span className="option__delete" onClick={onOptionDelete}>
@@ -52,17 +62,19 @@ const Option = ({ optionsToSelect, placeholder }) => {
             </span>
           )}
         </div>
-        <ul className="option__list">
-          {optionsToSelect.map((option) => (
-            <li
-              className="option__list-element"
-              key={option.id}
-              onClick={() => onOptionSelect(option)}
-            >
-              {option.name}
-            </li>
-          ))}
-        </ul>
+        {isOptionsOpen && (
+          <ul className="option__list">
+            {optionsToSelect.map((option) => (
+              <li
+                className="option__list-element"
+                key={option.id}
+                onClick={() => onOptionSelect(option)}
+              >
+                {option.name}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
       <div>{selectedOptionSubbmited.name}</div>
     </>

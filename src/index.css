@@ -1,5 +1,41 @@
 body {
   margin: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+.option_container {
+  width: 295px;
+  height: calc(100vh - 80px);
+  border: 1px solid #000;
+  margin: 20px;
+  border-radius: 5px;
+  padding: 20px;
+  font-size: 15px;
+}
+
+.option__choosen-container {
+  display: flex;
+  margin-bottom: 12px;
+  gap: 5px;
+}
+
+.option__choosen {
+  font-size: 18px;
+  margin-bottom: 10px;
+  padding: 3px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.option__choosen-element {
+  font-size: 18px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 0;
+  font-size: 15px;
+  display: flex;
+  gap: 3px;
 }
 
 .option__selected {
@@ -10,6 +46,7 @@ body {
   padding: 10px;
   display: flex;
   justify-content: space-between;
+  border-radius: 5px;
 }
 
 .option__delete {
@@ -21,9 +58,21 @@ body {
   border: 1px solid #000;
   padding: 10px;
   margin: 0;
+  border-radius: 5px;
 }
 
 .option__list-element {
   list-style-type: none;
   cursor: pointer;
+  padding: 3px;
+}
+.option__selected-input {
+  outline: none;
+  border: none;
+}
+
+.option__list-element:hover {
+  background-color: #faebd7;
+  border-radius: 5px;
+  padding: 3px;
 }

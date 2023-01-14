@@ -58,7 +58,7 @@ const Option = ({ optionsToSelect, placeholder }) => {
   return (
     <div style={{ height: "100vh" }}>
       <div className="header__container">
-        <h1>Welcome in "Harry Potter" world!</h1>
+        <h1>Welcome to the "Harry Potter" World!</h1>
         <div className="choose__container">
           <h2>Please choose your favourite character from the movie:</h2>
           <div className="container">

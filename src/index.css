@@ -3,6 +3,10 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+.container {
+  display: flex;
+}
+
 .option_container {
   width: 295px;
   height: calc(100vh - 80px);
@@ -15,8 +19,9 @@ body {
 
 .option__choosen-container {
   display: flex;
-  margin-bottom: 12px;
-  gap: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .option__choosen {
@@ -69,10 +74,18 @@ body {
 .option__selected-input {
   outline: none;
   border: none;
+  width: 100%;
 }
 
 .option__list-element:hover {
   background-color: #faebd7;
   border-radius: 5px;
   padding: 3px;
+}
+
+.option__submitted {
+  height: 200px;
+  width: 200px;
+  background-repeat: no-repeat;
+  background-size: contain;
 }

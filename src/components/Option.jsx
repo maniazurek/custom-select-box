@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 
+import SelectedOption from "./SelectedOption";
+
 const Option = ({ optionsToSelect, placeholder }) => {
-  const [selectedOption, setSelectedOption] = useState({});
-  const [selectedOptionDraft, setSelectedOptionDraft] = useState({});
+  const [selectedOption, setSelectedOption] = useState({ name: "", id: "" });
+  const [selectedOptionDraft, setSelectedOptionDraft] = useState({
+    name: "",
+    id: "",
+  });
   const [selectedOptionSubbmited, setSelectedOptionSubbmited] = useState({});
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
-  const [internalSuggestions, setInternalSugestions] =
-    useState(optionsToSelect);
+  const [areOptionsOpen, setAreOptionsOpen] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("click", () => setIsOptionsOpen(false));
+    const onWindowClick = () => setAreOptionsOpen(false);
+    window.addEventListener("click", onWindowClick);
+    return () => window.removeEventListener("click", onWindowClick);
   }, []);
 
   const onOptionSelect = (option) => {
@@ -19,8 +24,8 @@ const Option = ({ optionsToSelect, placeholder }) => {
   };
 
   const onOptionDelete = () => {
-    setSelectedOption({ name: "" });
-    setSelectedOptionDraft({ name: "" });
+    setSelectedOption({ name: "", id: "" });
+    setSelectedOptionDraft({ name: "", id: "" });
     setSelectedOptionSubbmited({});
   };
 
@@ -33,58 +38,65 @@ const Option = ({ optionsToSelect, placeholder }) => {
     if (event.key === "Enter") {
       const matchingOption = optionsToSelect.find((option) => {
         option.name === selectedOptionDraft.name;
+        setAreOptionsOpen(false);
       });
       if (matchingOption) {
         setSelectedOption(selectedOptionDraft);
+        setAreOptionsOpen(false);
       } else {
         setSelectedOptionDraft(selectedOption);
         setSelectedOptionSubbmited(selectedOption);
       }
     }
-    setIsOptionsOpen(false);
+  };
+
+  const onOptionsOpen = (event) => {
+    event.stopPropagation();
+    setAreOptionsOpen(true);
   };
 
   return (
-    <div className="option_container">
-      <div className="option__choosen-container">
-        <div className="option__choosen">Choosen option:</div>
-        <div className="option__choosen-element">
-          {selectedOptionDraft.name && (
-            <div style={{ display: "flex", gap: "5px" }}>
-              <span>{selectedOptionSubbmited.name}</span>
-              <span className="option__delete" onClick={onOptionDelete}>
-                &#10005;
-              </span>
-            </div>
+    <div className="container">
+      <div className="option_container">
+        <div className="option__selected">
+          <input
+            className="option__selected-input"
+            value={selectedOptionDraft.name}
+            placeholder={placeholder}
+            onChange={onOptionDraftEdit}
+            onKeyUp={onOptionSubmit}
+            onClick={onOptionsOpen}
+          />
+          {selectedOption.name && (
+            <span className="option__delete" onClick={onOptionDelete}>
+              &#10005;
+            </span>
           )}
         </div>
+        {areOptionsOpen && (
+          <ul className="option__list">
+            {optionsToSelect
+              .filter((option) =>
+                option.name
+                  .toLowerCase()
+                  .includes(selectedOptionDraft.name.toLowerCase())
+              )
+              .map((option) => (
+                <li
+                  className="option__list-element"
+                  key={option.id}
+                  onClick={() => onOptionSelect(option)}
+                >
+                  {option.name}
+                </li>
+              ))}
+          </ul>
+        )}
       </div>
-      <div className="option__selected">
-        <input
-          className="option__selected-input"
-          value={selectedOptionDraft.name}
-          placeholder={placeholder}
-          onChange={onOptionDraftEdit}
-          onKeyUp={onOptionSubmit}
-          onClick={(event) => {
-            setIsOptionsOpen(true);
-            event.stopPropagation();
-          }}
-        />
-      </div>
-      {isOptionsOpen && (
-        <ul className="option__list">
-          {optionsToSelect.map((option) => (
-            <li
-              className="option__list-element"
-              key={option.id}
-              onClick={() => onOptionSelect(option)}
-            >
-              {option.name}
-            </li>
-          ))}
-        </ul>
-      )}
+      <SelectedOption
+        selectedOptionDraft={selectedOptionDraft}
+        selectedOptionSubbmited={selectedOptionSubbmited}
+      />
     </div>
   );
 };

@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 
-const SelectedOption = ({ selectedOptionDraft, selectedOptionSubbmited }) => {
+const SelectedOption = ({
+  selectedOptionDraft,
+  selectedOptionSubbmited,
+}) => {
   return (
     <div className="option__choosen-container">
-      {selectedOptionDraft.name && (
-        <div className="option__choosen">Your favorite character for today is...</div>
+      {selectedOptionSubbmited.name && (
+        <div className="option__choosen">
+          Your favorite character for today is...
+        </div>
       )}
       <div className="option__choosen-element">
         {selectedOptionDraft.name && (

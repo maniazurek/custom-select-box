@@ -56,42 +56,50 @@ const Option = ({ optionsToSelect, placeholder }) => {
   };
 
   return (
-    <div className="container">
-      <div className="option_container">
-        <div className="option__selected">
-          <input
-            className="option__selected-input"
-            value={selectedOptionDraft.name}
-            placeholder={placeholder}
-            onChange={onOptionDraftEdit}
-            onKeyUp={onOptionSubmit}
-            onClick={onOptionsOpen}
-          />
-          {selectedOption.name && (
-            <span className="option__delete" onClick={onOptionDelete}>
-              &#10005;
-            </span>
-          )}
+    <div style={{ height: "100vh" }}>
+      <div className="header__container">
+        <h1>Welcome in "Harry Potter" world!</h1>
+        <div className="choose__container">
+          <h2>Please choose your favourite character from the movie:</h2>
+          <div className="container">
+            <div className="option_container">
+              <div className="option__selected">
+                <input
+                  className="option__selected-input"
+                  value={selectedOptionDraft.name}
+                  placeholder={placeholder}
+                  onChange={onOptionDraftEdit}
+                  onKeyUp={onOptionSubmit}
+                  onClick={onOptionsOpen}
+                />
+                {selectedOption.name && (
+                  <span className="option__delete" onClick={onOptionDelete}>
+                    &#10005;
+                  </span>
+                )}
+              </div>
+              {areOptionsOpen && (
+                <ul className="option__list">
+                  {optionsToSelect
+                    .filter((option) =>
+                      option.name
+                        .toLowerCase()
+                        .includes(selectedOptionDraft.name.toLowerCase())
+                    )
+                    .map((option) => (
+                      <li
+                        className="option__list-element"
+                        key={option.id}
+                        onClick={() => onOptionSelect(option)}
+                      >
+                        {option.name}
+                      </li>
+                    ))}
+                </ul>
+              )}
+            </div>
+          </div>
         </div>
-        {areOptionsOpen && (
-          <ul className="option__list">
-            {optionsToSelect
-              .filter((option) =>
-                option.name
-                  .toLowerCase()
-                  .includes(selectedOptionDraft.name.toLowerCase())
-              )
-              .map((option) => (
-                <li
-                  className="option__list-element"
-                  key={option.id}
-                  onClick={() => onOptionSelect(option)}
-                >
-                  {option.name}
-                </li>
-              ))}
-          </ul>
-        )}
       </div>
       <SelectedOption
         selectedOptionDraft={selectedOptionDraft}

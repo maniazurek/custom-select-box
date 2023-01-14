@@ -7,7 +7,7 @@ import optionsToSelect from "./utils/optionsToSelect";
 const App = () => {
   return (
     <>
-      <Option optionsToSelect={optionsToSelect} placeholder="Choose your favorite character" />
+      <Option optionsToSelect={optionsToSelect} placeholder="Choose your character" />
     </>
   );
 };
